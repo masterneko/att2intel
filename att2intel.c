@@ -43,15 +43,7 @@ int doWeHave(char *inp)
 char *extension (char *filename) {
 	if (filename == NULL) return NULL;
 
-	while (*filename != '.' && filename != '\0') {
-		++filename;
-	}
-
-	if (*filename == '.') {
-		++filename;
-	}
-
-	return filename;
+        return filename + strlen(filename) -1;
 }
 
 void copybasename (char *dest, char *filename) {
@@ -261,8 +253,10 @@ int main (int argc, char *argv[]) {
 	inext = extension (argv[0]);
 
 	if (strcmp (inext, "s") != 0) {
-		fprintf(used_stderr, "FATAL: input is not .s");
-		exit(-1);
+                if (strcmp (inext, "S") != 0) {
+                        fprintf(used_stderr, "FATAL: input is not .S %s \n",inext);
+                        exit(-1);
+                }
 	}
 
 	in = fopen (argv[0], "rt");
