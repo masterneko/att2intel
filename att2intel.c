@@ -41,17 +41,18 @@ int doWeHave(char *inp)
 /* End of deduplicator things */
 
 char *extension (char *filename) {
-	if (filename == NULL) return NULL;
+    if (filename == NULL) return NULL;
 
-	while (*filename != '.' && filename != '\0') {
-		++filename;
-	}
+    char* ext = NULL;
 
-	if (*filename == '.') {
-		++filename;
-	}
+    while(*filename != 0)
+    {
+            if(*filename == '.') ext = filename;
 
-	return filename;
+            ++filename;
+    }
+
+    return ext != NULL ? ext + 1 : "";
 }
 
 void copybasename (char *dest, char *filename) {
@@ -260,7 +261,7 @@ int main (int argc, char *argv[]) {
 	argv+=optind;
 	inext = extension (argv[0]);
 
-	if (strcmp (inext, "s") != 0) {
+	if (strcmp (inext, "s") != 0 && strcmp (inext, "S") != 0) {
 		fprintf(used_stderr, "FATAL: input is not .s");
 		exit(-1);
 	}
